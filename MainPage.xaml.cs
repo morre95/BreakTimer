@@ -1,8 +1,13 @@
-﻿namespace BreakTimer
+﻿using System.Text.RegularExpressions;
+
+namespace BreakTimer
 {
     public partial class MainPage : ContentPage
     {
-        int seconds = 600;
+        private int seconds = 600;
+
+        private bool _timeOfDayIsChecked;
+        public bool TimeOfDayIsChecked { get { return _timeOfDayIsChecked; } private set { _timeOfDayIsChecked = !value; } }
 
         public MainPage()
         {
@@ -16,7 +21,7 @@
             TimeLabel.FontSize = 85;
             UpdateTimeText(true);
 
-            while (seconds > 0)
+            while (seconds >= 0)
             {
                 UpdateTimeText();
                 seconds--;
@@ -32,8 +37,13 @@
             if (info) 
             {
                 DateTime dateTime = DateTime.Now + TimeSpan.FromSeconds(seconds);
-                InformationLabel.Text = $"Rasten är över {dateTime.ToString("HH:mm")}";
+                UpdateInfoTimeText(dateTime);
             }
+        }
+
+        private void UpdateInfoTimeText(DateTime dateTime)
+        {
+            InformationLabel.Text = $"Rasten är över {dateTime.ToString("HH:mm")}";
         }
 
         private void AddOrSubBtn_Click(object sender, EventArgs e)
@@ -52,6 +62,49 @@
         {
             seconds = 0;
             UpdateTimeText(true);
+        }
+
+        private void TimeOfDay_CHeckChanged(object sender, CheckedChangedEventArgs e)
+        {
+            TimeOfDayIsChecked = TimeOfDayCBox.IsChecked;
+            //TimeEntry.IsEnabled = !TimeEntry.IsEnabled;
+        }
+
+        private void TimeEntry_Changed(object sender, EventArgs e)
+        {
+            var timeEntry = sender as Entry;
+
+            if (timeEntry != null)
+            {
+                if (TimeOfDayIsChecked)
+                {
+                    TimeSpan time;
+                    if (TimeSpan.TryParse(timeEntry.Text, out time))
+                    {
+                        UpdateInfoTimeText(DateTime.Now + time);
+                        seconds = (int)time.TotalSeconds;
+                        UpdateTimeText(true);
+                    }
+                }
+                else
+                {
+                    if (IsValidTime(timeEntry.Text))
+                    {
+                        DateTime date;
+                        if (DateTime.TryParse(timeEntry.Text, out date))
+                        {
+                            UpdateInfoTimeText(date);
+                        }
+                    }
+                }
+            } 
+        }
+
+        public bool IsValidTime(string str)
+        {
+            string strRegex = @"^([01]?[0-9]|2[0-3]):[0-5][0-9]$";
+            Regex re = new Regex(strRegex);
+            return re.IsMatch(str);
         }
 
     }

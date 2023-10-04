@@ -31,9 +31,16 @@
                 FontSize="18"
                 HorizontalOptions="Center" />
 
-            
+
 
             <StackLayout x:Name="ControllPanel">
+                <HorizontalStackLayout>
+                    <Label Text="Time of Day: " />
+                    <CheckBox x:Name="TimeOfDayCBox" CheckedChanged="TimeOfDay_CHeckChanged" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Margin="0,0,0,10">
+                    <Entry x:Name="TimeEntry" WidthRequest="328" TextChanged="TimeEntry_Changed" />
+                </HorizontalStackLayout>
                 <HorizontalStackLayout>
                     <Button 
                         Text="+1 sec"
