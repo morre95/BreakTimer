@@ -43,7 +43,8 @@ namespace BreakTimer
 
         private void UpdateInfoTimeText(DateTime dateTime)
         {
-            InformationLabel.Text = $"Rasten är över {dateTime.ToString("HH:mm")}";
+            InformationLabel.Text = InformationText.Text.Replace("{time}", dateTime.ToString("HH:mm"));
+            //InformationLabel.Text = $"Rasten är över {dateTime.ToString("HH:mm")}";
         }
 
         private void AddOrSubBtn_Click(object sender, EventArgs e)
@@ -105,6 +106,15 @@ namespace BreakTimer
             string strRegex = @"^([01]?[0-9]|2[0-3]):[0-5][0-9]$";
             Regex re = new Regex(strRegex);
             return re.IsMatch(str);
+        }
+
+        private void InfoTextChanged(object sender, EventArgs e)
+        {
+            Entry entry = sender as Entry;
+            if (entry != null)
+            {
+                UpdateTimeText(true);
+            }
         }
 
     }
