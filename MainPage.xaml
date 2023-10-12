@@ -34,76 +34,57 @@
 
 
             <StackLayout x:Name="ControllPanel">
-                <HorizontalStackLayout>
-                    <Label Text="Time of Day: " />
-                    <CheckBox x:Name="TimeOfDayCBox" CheckedChanged="TimeOfDay_CHeckChanged" />
-                </HorizontalStackLayout>
                 <HorizontalStackLayout Margin="0,0,0,10">
-                    <Entry x:Name="TimeEntry" WidthRequest="326" TextChanged="TimeEntry_Changed" />
+                    <Entry 
+                        x:Name="TimeEntry" 
+                        Placeholder="Tid (16:30), sek (60s), min (10m) or timmar (1h)"
+                        PlaceholderColor="BurlyWood"
+                        WidthRequest="326" 
+                        TextChanged="TimeEntryChanged" 
+                        Completed="OnTimeEntryCompleted" />
                 </HorizontalStackLayout>
-                <HorizontalStackLayout>
-                    <Button 
-                        Text="+1 sec"
-                        Clicked="AddOrSubBtn_Click"
-                        WidthRequest="80"
-                        Margin="0,0,2,12"/>
-                    <Button
-                        Text="+5 sec"
-                        Clicked="AddOrSubBtn_Click"
-                        WidthRequest="80"
-                        Margin="0,0,2,12"/>
-                    <Button
-                        Text="+10 sec"
-                        Clicked="AddOrSubBtn_Click"
-                        WidthRequest="80"
-                        Margin="0,0,2,12"/>
-                    <Button
-                        Text="+30 sec"
-                        Clicked="AddOrSubBtn_Click"
-                        WidthRequest="80"
-                        Margin="0,0,2,12"/>
-                </HorizontalStackLayout>
+
                 <HorizontalStackLayout>
                     <Button 
                         Text="+1 min"
-                        Clicked="AddOrSubBtn_Click"
+                        Clicked="AddOrSubBtnClick"
                         WidthRequest="80"
                         Margin="0,0,2,2"/>
                     <Button
                         Text="+5 min"
-                        Clicked="AddOrSubBtn_Click"
+                        Clicked="AddOrSubBtnClick"
                         WidthRequest="80"
                         Margin="0,0,2,2"/>
                     <Button
                         Text="+10 min"
-                        Clicked="AddOrSubBtn_Click"
+                        Clicked="AddOrSubBtnClick"
                         WidthRequest="80"
                         Margin="0,0,2,2"/>
                     <Button
                         Text="+30 min"
-                        Clicked="AddOrSubBtn_Click"
+                        Clicked="AddOrSubBtnClick"
                         WidthRequest="80"
                         Margin="0,0,2,2"/>
                 </HorizontalStackLayout>
                 <HorizontalStackLayout>
                     <Button
                         Text="-1 min"
-                        Clicked="AddOrSubBtn_Click"
+                        Clicked="AddOrSubBtnClick"
                         WidthRequest="80"
                         Margin="0,0,2,0"/>
                     <Button
                         Text="-5 min"
-                        Clicked="AddOrSubBtn_Click"
+                        Clicked="AddOrSubBtnClick"
                         WidthRequest="80"
                         Margin="0,0,2,0"/>
                     <Button
                         Text="-10 min"
-                        Clicked="AddOrSubBtn_Click"
+                        Clicked="AddOrSubBtnClick"
                         WidthRequest="80"
                         Margin="0,0,2,0"/>
                     <Button
                         Text="-30 min"
-                        Clicked="AddOrSubBtn_Click"
+                        Clicked="AddOrSubBtnClick"
                         WidthRequest="80"
                         Margin="0,0,2,0"/>
                 </HorizontalStackLayout>
@@ -111,13 +92,13 @@
                     <Button 
                         ToolTipProperties.Text="Reset break time"
                         Text="Reset" 
-                        Clicked="ResetBtn_Click" 
+                        Clicked="ResetBtnClick" 
                         WidthRequest="162"
                         Margin="0,2,0,0"/>
                     <Button
                         Text="Start"
                         ToolTipProperties.Text="Start count down for your break"
-                        Clicked="StartTimer_Clicked"
+                        Clicked="StartTimerClicked"
                         Margin="2,2,0,0"
                         WidthRequest="162"/>
                 </HorizontalStackLayout>
@@ -131,8 +112,8 @@
                     HorizontalOptions="Start" 
                     Placeholder="Set information text here" />
             </StackLayout>
-            
 
+            <Label x:Name="DebugLabel" />
         </VerticalStackLayout>
     </ScrollView>
 

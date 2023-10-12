@@ -4,7 +4,7 @@ namespace BreakTimer
 {
     public partial class MainPage : ContentPage
     {
-        private int seconds = 600;
+        private int seconds = 0;
 
         private bool _timeOfDayIsChecked;
         public bool TimeOfDayIsChecked { get { return _timeOfDayIsChecked; } private set { _timeOfDayIsChecked = !value; } }
@@ -26,7 +26,7 @@ namespace BreakTimer
             );*/
         }
 
-        private async void StartTimer_Clicked(object sender, EventArgs e)
+        private async void StartTimerClicked(object sender, EventArgs e)
         {
             ControllPanel.IsVisible = false;
             TimeLabel.FontSize = 85;
@@ -55,10 +55,9 @@ namespace BreakTimer
         private void UpdateInfoTimeText(DateTime dateTime)
         {
             InformationLabel.Text = InformationText.Text.Replace("{time}", dateTime.ToString("HH:mm"));
-            //InformationLabel.Text = $"Rasten är över {dateTime.ToString("HH:mm")}";
         }
 
-        private void AddOrSubBtn_Click(object sender, EventArgs e)
+        private void AddOrSubBtnClick(object sender, EventArgs e)
         {
             Button btn = sender as Button;
             if (btn != null)
@@ -70,46 +69,74 @@ namespace BreakTimer
             }
         }
 
-        private void ResetBtn_Click(object sender, EventArgs e)
+        private void ResetBtnClick(object sender, EventArgs e)
         {
             seconds = 0;
             UpdateTimeText(true);
         }
 
-        private void TimeOfDay_CHeckChanged(object sender, CheckedChangedEventArgs e)
-        {
-            TimeOfDayIsChecked = TimeOfDayCBox.IsChecked;
-            //TimeEntry.IsEnabled = !TimeEntry.IsEnabled;
-        }
-
-        private void TimeEntry_Changed(object sender, EventArgs e)
+        private void TimeEntryChanged(object sender, EventArgs e)
         {
             var timeEntry = sender as Entry;
 
             if (timeEntry != null)
             {
-                if (TimeOfDayIsChecked)
-                {
-                    TimeSpan time;
-                    if (TimeSpan.TryParse(timeEntry.Text, out time))
-                    {
-                        UpdateInfoTimeText(DateTime.Now + time);
-                        seconds = (int)time.TotalSeconds;
-                        UpdateTimeText(true);
-                    }
-                }
-                else
-                {
-                    if (IsValidTime(timeEntry.Text))
-                    {
-                        DateTime date;
-                        if (DateTime.TryParse(timeEntry.Text, out date))
-                        {
-                            UpdateInfoTimeText(date);
-                        }
-                    }
-                }
+                CheckIfTime(timeEntry);
             } 
+            
+        }
+
+        private void OnTimeEntryCompleted(object sender, EventArgs e)
+        {
+            Entry timeEntry = sender as Entry;
+            if (timeEntry != null)
+            {
+                CheckIfTime(timeEntry);
+                StartTimerClicked(sender, e);
+            }
+        }
+
+        private void CheckIfTime(Entry timeEntry)
+        {
+            if (IsValidTime(timeEntry.Text))
+            {
+                DateTime date;
+                if (DateTime.TryParse(timeEntry.Text, out date))
+                {
+                    TimeSpan diff = DateTime.Now - date;
+                    seconds = Math.Abs((int)diff.TotalSeconds);
+                    UpdateTimeText();
+                    UpdateInfoTimeText(date);
+                }
+            }
+            else if (timeEntry.Text.ToLower().Contains("s"))
+            {
+                string secoundText = timeEntry.Text.Remove(timeEntry.Text.Length - 1);
+                if (int.TryParse(secoundText, out seconds))
+                {
+                    UpdateTimeText(true);
+                }
+            }
+            else if (timeEntry.Text.ToLower().Contains("m"))
+            {
+                string secoundText = timeEntry.Text.Remove(timeEntry.Text.Length - 1);
+                int minutes;
+                if (int.TryParse(secoundText, out minutes))
+                {
+                    seconds = minutes * 60;
+                    UpdateTimeText(true);
+                }
+            }
+            else if (timeEntry.Text.ToLower().Contains("m"))
+            {
+                string secoundText = timeEntry.Text.Remove(timeEntry.Text.Length - 1);
+                int hours;
+                if (int.TryParse(secoundText, out hours))
+                {
+                    seconds = hours * 60 * 60;
+                    UpdateTimeText(true);
+                }
+            }
         }
 
         public bool IsValidTime(string str)
