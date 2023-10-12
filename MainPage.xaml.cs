@@ -79,7 +79,8 @@ namespace BreakTimer
 
         private void ResetBtnClick(object sender, EventArgs e)
         {
-            if (sender is Button btn) {
+            if (sender is Button) 
+            {
                 seconds = 0;
                 UpdateTimeText(true);
             }
@@ -106,8 +107,7 @@ namespace BreakTimer
         {
             if (IsValidTime(timeEntry.Text))
             {
-                DateTime date;
-                if (DateTime.TryParse(timeEntry.Text, out date))
+                if (DateTime.TryParse(timeEntry.Text, out DateTime date))
                 {
                     TimeSpan diff = DateTime.Now - date;
                     if (diff.TotalSeconds < 0)
@@ -115,7 +115,7 @@ namespace BreakTimer
                         seconds = Math.Abs((int)diff.TotalSeconds);
                         UpdateTimeText();
                         UpdateInfoTimeText(date);
-                    } 
+                    }
                 }
             }
             else if (timeEntry.Text.ToLower().Contains('s'))
@@ -146,7 +146,7 @@ namespace BreakTimer
             }
         }
 
-        public bool IsValidTime(string str)
+        public static bool IsValidTime(string str)
         {
             string strRegex = @"^([01]?[0-9]|2[0-3]):[0-5][0-9]$";
             Regex re = new Regex(strRegex);
