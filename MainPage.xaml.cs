@@ -118,7 +118,7 @@ namespace BreakTimer
                     } 
                 }
             }
-            else if (timeEntry.Text.ToLower().Contains("s"))
+            else if (timeEntry.Text.ToLower().Contains('s'))
             {
                 string secoundText = timeEntry.Text.Remove(timeEntry.Text.Length - 1);
                 if (int.TryParse(secoundText, out seconds))
@@ -126,7 +126,7 @@ namespace BreakTimer
                     UpdateTimeText(true);
                 }
             }
-            else if (timeEntry.Text.ToLower().Contains("m"))
+            else if (timeEntry.Text.ToLower().Contains('m'))
             {
                 string secoundText = timeEntry.Text.Remove(timeEntry.Text.Length - 1);
                 if (int.TryParse(secoundText, out int minutes))
@@ -135,7 +135,7 @@ namespace BreakTimer
                     UpdateTimeText(true);
                 }
             }
-            else if (timeEntry.Text.ToLower().Contains("h"))
+            else if (timeEntry.Text.ToLower().Contains('h'))
             {
                 string secoundText = timeEntry.Text.Remove(timeEntry.Text.Length - 1);
                 if (int.TryParse(secoundText, out int hours))
@@ -155,7 +155,7 @@ namespace BreakTimer
 
         private void InfoTextChanged(object sender, EventArgs e)
         {
-            if (sender is Entry entry)
+            if (sender is Entry)
             {
                 UpdateTimeText(true);
             }
