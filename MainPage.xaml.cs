@@ -13,8 +13,8 @@ namespace BreakTimer
         {
             InitializeComponent();
             UpdateTimeText(true);
-            // TODO: Fixa en Entry att skriva tiden i. Och också möjligheten att välja mellan kloch slaget då rasten är slut éller hur lång den är
-            // TODO: Spela upp ljud när rasten är slut
+
+            // TODO: Möjlighet att spela upp ljud när rasten är slut
             // TODO: Animation när rasten börjar
             /*Example:
             uint duration = 10 * 60 * 1000;
@@ -29,7 +29,7 @@ namespace BreakTimer
         private async void StartTimerClicked(object sender, EventArgs e)
         {
             ControllPanel.IsVisible = false;
-            TimeLabel.FontSize = 85;
+            TimeLabel.FontSize = 110;
             UpdateTimeText(true);
 
             while (seconds >= 0)
@@ -59,11 +59,10 @@ namespace BreakTimer
 
         private void AddOrSubBtnClick(object sender, EventArgs e)
         {
-            Button btn = sender as Button;
-            if (btn != null)
+            if (sender is Button btn)
             {
                 string[] split = btn.Text.Split(' ');
-                seconds += int.Parse(split[0]) * (split[1] == "sec" ? 1 : 60);
+                seconds += int.Parse(split[0]) * 60;
                 if (seconds < 0) seconds = 0;
                 UpdateTimeText(true);
             }
@@ -71,26 +70,25 @@ namespace BreakTimer
 
         private void ResetBtnClick(object sender, EventArgs e)
         {
-            seconds = 0;
-            UpdateTimeText(true);
+            if (sender is Button btn) {
+                seconds = 0;
+                UpdateTimeText(true);
+            }
         }
 
         private void TimeEntryChanged(object sender, EventArgs e)
         {
-            var timeEntry = sender as Entry;
-
-            if (timeEntry != null)
+            if (sender is Entry timeEntry)
             {
                 CheckIfTime(timeEntry);
-            } 
-            
+            }
         }
 
         private void OnTimeEntryCompleted(object sender, EventArgs e)
         {
-            Entry timeEntry = sender as Entry;
-            if (timeEntry != null)
+            if (sender is Entry timeEntry)
             {
+                DebugLabel.Text = timeEntry.Text;
                 CheckIfTime(timeEntry);
                 StartTimerClicked(sender, e);
             }
@@ -104,9 +102,12 @@ namespace BreakTimer
                 if (DateTime.TryParse(timeEntry.Text, out date))
                 {
                     TimeSpan diff = DateTime.Now - date;
-                    seconds = Math.Abs((int)diff.TotalSeconds);
-                    UpdateTimeText();
-                    UpdateInfoTimeText(date);
+                    if (diff.TotalSeconds < 0)
+                    {
+                        seconds = Math.Abs((int)diff.TotalSeconds);
+                        UpdateTimeText();
+                        UpdateInfoTimeText(date);
+                    } 
                 }
             }
             else if (timeEntry.Text.ToLower().Contains("s"))
@@ -120,18 +121,16 @@ namespace BreakTimer
             else if (timeEntry.Text.ToLower().Contains("m"))
             {
                 string secoundText = timeEntry.Text.Remove(timeEntry.Text.Length - 1);
-                int minutes;
-                if (int.TryParse(secoundText, out minutes))
+                if (int.TryParse(secoundText, out int minutes))
                 {
                     seconds = minutes * 60;
                     UpdateTimeText(true);
                 }
             }
-            else if (timeEntry.Text.ToLower().Contains("m"))
+            else if (timeEntry.Text.ToLower().Contains("h"))
             {
                 string secoundText = timeEntry.Text.Remove(timeEntry.Text.Length - 1);
-                int hours;
-                if (int.TryParse(secoundText, out hours))
+                if (int.TryParse(secoundText, out int hours))
                 {
                     seconds = hours * 60 * 60;
                     UpdateTimeText(true);
@@ -148,8 +147,7 @@ namespace BreakTimer
 
         private void InfoTextChanged(object sender, EventArgs e)
         {
-            Entry entry = sender as Entry;
-            if (entry != null)
+            if (sender is Entry entry)
             {
                 UpdateTimeText(true);
             }

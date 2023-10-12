@@ -37,7 +37,8 @@
                 <HorizontalStackLayout Margin="0,0,0,10">
                     <Entry 
                         x:Name="TimeEntry" 
-                        Placeholder="Tid (16:30), sek (60s), min (10m) or timmar (1h)"
+                        ToolTipProperties.Text="Klockslag (16:30), sekunder (60s), minuter (10m) eller timmar (1h)"
+                        Placeholder="Skriv tid här"
                         PlaceholderColor="BurlyWood"
                         WidthRequest="326" 
                         TextChanged="TimeEntryChanged" 
