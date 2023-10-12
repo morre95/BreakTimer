@@ -79,7 +79,8 @@ namespace BreakTimer
 
         private void ResetBtnClick(object sender, EventArgs e)
         {
-            if (sender is Button btn) {
+            if (sender is Button) 
+            {
                 seconds = 0;
                 UpdateTimeText(true);
             }
@@ -106,8 +107,7 @@ namespace BreakTimer
         {
             if (IsValidTime(timeEntry.Text))
             {
-                DateTime date;
-                if (DateTime.TryParse(timeEntry.Text, out date))
+                if (DateTime.TryParse(timeEntry.Text, out DateTime date))
                 {
                     TimeSpan diff = DateTime.Now - date;
                     if (diff.TotalSeconds < 0)
@@ -115,10 +115,10 @@ namespace BreakTimer
                         seconds = Math.Abs((int)diff.TotalSeconds);
                         UpdateTimeText();
                         UpdateInfoTimeText(date);
-                    } 
+                    }
                 }
             }
-            else if (timeEntry.Text.ToLower().Contains("s"))
+            else if (timeEntry.Text.ToLower().Contains('s'))
             {
                 string secoundText = timeEntry.Text.Remove(timeEntry.Text.Length - 1);
                 if (int.TryParse(secoundText, out seconds))
@@ -126,7 +126,7 @@ namespace BreakTimer
                     UpdateTimeText(true);
                 }
             }
-            else if (timeEntry.Text.ToLower().Contains("m"))
+            else if (timeEntry.Text.ToLower().Contains('m'))
             {
                 string secoundText = timeEntry.Text.Remove(timeEntry.Text.Length - 1);
                 if (int.TryParse(secoundText, out int minutes))
@@ -135,7 +135,7 @@ namespace BreakTimer
                     UpdateTimeText(true);
                 }
             }
-            else if (timeEntry.Text.ToLower().Contains("h"))
+            else if (timeEntry.Text.ToLower().Contains('h'))
             {
                 string secoundText = timeEntry.Text.Remove(timeEntry.Text.Length - 1);
                 if (int.TryParse(secoundText, out int hours))
@@ -146,7 +146,7 @@ namespace BreakTimer
             }
         }
 
-        public bool IsValidTime(string str)
+        public static bool IsValidTime(string str)
         {
             string strRegex = @"^([01]?[0-9]|2[0-3]):[0-5][0-9]$";
             Regex re = new Regex(strRegex);
@@ -155,7 +155,7 @@ namespace BreakTimer
 
         private void InfoTextChanged(object sender, EventArgs e)
         {
-            if (sender is Entry entry)
+            if (sender is Entry)
             {
                 UpdateTimeText(true);
             }
