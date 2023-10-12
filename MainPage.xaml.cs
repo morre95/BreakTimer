@@ -28,6 +28,12 @@ namespace BreakTimer
 
         private async void StartTimerClicked(object sender, EventArgs e)
         {
+            Image image = new Image { 
+                Source = ImageSource.FromFile("break.png"),
+                WidthRequest = 228,
+            };
+            MainView.Children.Insert(0, image);
+
             ControllPanel.IsVisible = false;
             TimeLabel.FontSize = 110;
             UpdateTimeText(true);
@@ -38,6 +44,9 @@ namespace BreakTimer
                 seconds--;
                 await Task.Delay(1000);
             }
+
+            MainView.Children.RemoveAt(0);
+
             ControllPanel.IsVisible = true;
             TimeLabel.FontSize = 42;
         }
@@ -88,7 +97,6 @@ namespace BreakTimer
         {
             if (sender is Entry timeEntry)
             {
-                DebugLabel.Text = timeEntry.Text;
                 CheckIfTime(timeEntry);
                 StartTimerClicked(sender, e);
             }

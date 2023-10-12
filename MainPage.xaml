@@ -14,9 +14,9 @@
         <VerticalStackLayout
             Spacing="25"
             Padding="30,0"
-            VerticalOptions="Center">
+            VerticalOptions="Center"
+            x:Name="MainView">
 
-            
             <Label
                 x:Name="TimeLabel"
                 Text="Break Timer!"
