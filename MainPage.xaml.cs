@@ -8,6 +8,17 @@
         {
             InitializeComponent();
             UpdateTimeText(true);
+            // TODO: Fixa en Entry att skriva tiden i. Och också möjligheten att välja mellan kloch slaget då rasten är slut éller hur lång den är
+            // TODO: Spela upp ljud när rasten är slut
+            // TODO: Animation när rasten börjar
+            /*Example:
+            uint duration = 10 * 60 * 1000;
+            await Task.WhenAll
+            (
+              TimeLabel.RotateTo(307 * 360, duration),
+              TimeLabel.RotateXTo(251 * 360, duration),
+              TimeLabel.RotateYTo(199 * 360, duration)
+            );*/
         }
 
         private async void StartTimer_Clicked(object sender, EventArgs e)
@@ -16,7 +27,7 @@
             TimeLabel.FontSize = 85;
             UpdateTimeText(true);
 
-            while (seconds > 0)
+            while (seconds >= 0)
             {
                 UpdateTimeText();
                 seconds--;
