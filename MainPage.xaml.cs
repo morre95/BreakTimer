@@ -17,7 +17,7 @@ namespace BreakTimer
 
 
             // TODO: Möjlighet att spela upp ljud när rasten är slut
-            // TODO: Animation när rasten börjar
+            // TODO: Animation när rasten är över eller under rasten
             /*Example:
             uint duration = 10 * 60 * 1000;
             await Task.WhenAll
@@ -30,27 +30,31 @@ namespace BreakTimer
 
         private async void StartTimerClicked(object sender, EventArgs e)
         {
-            Image image = new Image { 
-                Source = ImageSource.FromFile("break.png"),
-                WidthRequest = 228,
-            };
-            MainView.Children.Insert(0, image);
-
-            ControllPanel.IsVisible = false;
-            TimeLabel.FontSize = 110;
-            UpdateTimeText(true);
-
-            while (seconds >= 0)
+            if (sender is Button)
             {
-                UpdateTimeText();
-                seconds--;
-                await Task.Delay(1000);
+                Image image = new Image
+                {
+                    Source = ImageSource.FromFile("break.png"),
+                    WidthRequest = 228,
+                };
+                MainView.Children.Insert(0, image);
+
+                ControllPanel.IsVisible = false;
+                TimeLabel.FontSize = 110;
+                UpdateTimeText(true);
+
+                while (seconds >= 0)
+                {
+                    UpdateTimeText();
+                    seconds--;
+                    await Task.Delay(1000);
+                }
+
+                MainView.Children.RemoveAt(0);
+
+                ControllPanel.IsVisible = true;
+                TimeLabel.FontSize = 42;
             }
-
-            MainView.Children.RemoveAt(0);
-
-            ControllPanel.IsVisible = true;
-            TimeLabel.FontSize = 42;
         }
 
         private void UpdateTimeText(bool info = false)
@@ -58,6 +62,7 @@ namespace BreakTimer
             TimeLabel.Text = TimeSpan.FromSeconds(seconds).ToString("hh':'mm':'ss");
             if (info) 
             {
+                // TODO: Ibland räknar den här en minut för kort rast
                 DateTime dateTime = DateTime.Now + TimeSpan.FromSeconds(seconds);
                 UpdateInfoTimeText(dateTime);
             }
@@ -101,7 +106,7 @@ namespace BreakTimer
             if (sender is Entry timeEntry)
             {
                 CheckIfTime(timeEntry);
-                StartTimerClicked(sender, e);
+                StartTimerClicked(new Button(), e);
             }
         }
 
