@@ -39,7 +39,7 @@
                         x:Name="TimeEntry" 
                         ToolTipProperties.Text="Klockslag (16:30), sekunder (60s), minuter (10m) eller timmar (1h)"
                         Placeholder="Skriv tid här"
-                        PlaceholderColor="BurlyWood"
+                        PlaceholderColor="Chocolate"
                         WidthRequest="326" 
                         TextChanged="TimeEntryChanged" 
                         Completed="OnTimeEntryCompleted" />
@@ -95,7 +95,11 @@
                         Text="Reset" 
                         Clicked="ResetBtnClick" 
                         WidthRequest="162"
-                        Margin="0,2,0,0"/>
+                        Margin="0,2,0,0"
+                        BackgroundColor="DarkRed"
+                        TextColor="White"
+                        BorderWidth="2"
+                        BorderColor="White"/>
                     <Button
                         Text="Start"
                         ToolTipProperties.Text="Start count down for your break"
