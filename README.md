@@ -1,6 +1,6 @@
 # BreakTimer
 
-![BreakTimer Logo](https://github.com/morre95/BreakTimer/tree/main/Resources/Images/break.png) 
+![BreakTimer Logo](tree/main/Resources/Images/break.png) 
 
 ## Beskrivning
 
