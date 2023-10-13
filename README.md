@@ -20,4 +20,4 @@ BreakTimer är en enkel och effektiv timer-applikation skapad med C# och [MAUI](h
 1. Klona repot:
    ```shell
    git clone https://github.com/morre95/BreakTimer.git
-2. Starta genom Visual Studio
+2. Build solution genom Visual Studio
