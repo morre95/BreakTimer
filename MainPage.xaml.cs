@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using Microsoft.Maui.Platform;
+using System.Text.RegularExpressions;
 
 namespace BreakTimer
 {
@@ -13,6 +14,7 @@ namespace BreakTimer
         {
             InitializeComponent();
             UpdateTimeText(true);
+
 
             // TODO: Möjlighet att spela upp ljud när rasten är slut
             // TODO: Animation när rasten börjar
