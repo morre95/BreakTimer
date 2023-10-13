@@ -1,6 +1,6 @@
 # BreakTimer
 
-![BreakTimer Logo](https://img.shields.io/badge/take_a-something?style=plastic&logo=dotnet) 
+![BreakTimer Logo](https://img.shields.io/badge/break-timer?style=plastic&logo=dotnet) 
 
 ## Beskrivning
 
