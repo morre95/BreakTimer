@@ -1,6 +1,6 @@
 # BreakTimer
 
-![BreakTimer Logo](tree/main/Resources/Images/break.png) 
+![BreakTimer Logo](https://img.shields.io/badge/take_a-break) 
 
 ## Beskrivning
 
