@@ -1,6 +1,6 @@
 # BreakTimer
 
-![BreakTimer Logo](path/to/logo.png) <!-- Ersätt 'path/to/logo.png' med sökvägen till din logo om du har en -->
+![BreakTimer Logo](/tree/main/Resources/Images/break.png) 
 
 ## Beskrivning
 
