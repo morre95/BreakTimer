@@ -1,6 +1,6 @@
 # BreakTimer
 
-![BreakTimer Logo](https://img.shields.io/badge/take_a-break) 
+![BreakTimer Logo](https://img.shields.io/badge/take_a-break_now) 
 
 ## Beskrivning
 
