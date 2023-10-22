@@ -21,3 +21,8 @@ BreakTimer är en enkel och effektiv timer-applikation skapad med C# och [MAUI](
    ```shell
    git clone https://github.com/morre95/BreakTimer.git
 2. Build solution genom Visual Studio
+
+
+## Licens
+Det här projektet är licensierat under MIT-licensen. Se [LICENSE](LICENSE) för detaljer.
+
