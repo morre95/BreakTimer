@@ -127,16 +127,16 @@ namespace BreakTimer
             }
             else if (timeEntry.Text.ToLower().Contains('s'))
             {
-                string secoundText = timeEntry.Text.Remove(timeEntry.Text.Length - 1);
-                if (int.TryParse(secoundText, out seconds))
+                string secondText = timeEntry.Text.Remove(timeEntry.Text.Length - 1);
+                if (int.TryParse(secondText, out seconds))
                 {
                     UpdateTimeText(true);
                 }
             }
             else if (timeEntry.Text.ToLower().Contains('m'))
             {
-                string secoundText = timeEntry.Text.Remove(timeEntry.Text.Length - 1);
-                if (int.TryParse(secoundText, out int minutes))
+                string secondText = timeEntry.Text.Remove(timeEntry.Text.Length - 1);
+                if (int.TryParse(secondText, out int minutes))
                 {
                     seconds = minutes * 60;
                     UpdateTimeText(true);
@@ -144,8 +144,8 @@ namespace BreakTimer
             }
             else if (timeEntry.Text.ToLower().Contains('h'))
             {
-                string secoundText = timeEntry.Text.Remove(timeEntry.Text.Length - 1);
-                if (int.TryParse(secoundText, out int hours))
+                string secondText = timeEntry.Text.Remove(timeEntry.Text.Length - 1);
+                if (int.TryParse(secondText, out int hours))
                 {
                     seconds = hours * 60 * 60;
                     UpdateTimeText(true);
