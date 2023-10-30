@@ -1,4 +1,5 @@
 ﻿using Microsoft.Maui.Platform;
+using System;
 using System.Text.RegularExpressions;
 
 namespace BreakTimer
@@ -32,6 +33,11 @@ namespace BreakTimer
         {
             if (sender is Button)
             {
+                if (!string.IsNullOrWhiteSpace(TimeEntry.Text))
+                {
+                    CheckIfTime(TimeEntry);
+                }
+                
                 Image image = new Image
                 {
                     Source = ImageSource.FromFile("break.png"),
@@ -62,9 +68,18 @@ namespace BreakTimer
             TimeLabel.Text = TimeSpan.FromSeconds(seconds).ToString("hh':'mm':'ss");
             if (info) 
             {
-                // TODO: Ibland räknar den här en minut för kort rast
-                DateTime dateTime = DateTime.Now + TimeSpan.FromSeconds(seconds);
-                UpdateInfoTimeText(dateTime);
+                // TODO: Ibland räknar detta en minut för kort rast
+                //DateTime dateTime = DateTime.Now + TimeSpan.FromSeconds(seconds);
+                //UpdateInfoTimeText(dateTime);
+
+                // Testar med att avrunda
+                if (seconds > 0)
+                {
+                    TimeSpan span = TimeSpan.FromSeconds(seconds);
+                    long ticks = (DateTime.Now.Ticks + (span.Ticks / 2) + 1) / span.Ticks;
+
+                    UpdateInfoTimeText(new DateTime(ticks * span.Ticks));
+                }
             }
         }
 
@@ -79,7 +94,15 @@ namespace BreakTimer
             {
                 string[] split = btn.Text.Split(' ');
                 seconds += int.Parse(split[0]) * 60;
-                if (seconds < 0) seconds = 0;
+                if (seconds < 0)
+                {
+                    seconds = 0;
+                }
+                else if (!string.IsNullOrWhiteSpace(TimeEntry.Text))
+                {
+                    TimeEntry.Text = (DateTime.Now + TimeSpan.FromSeconds(seconds)).ToString("HH:mm");
+                }
+
                 UpdateTimeText(true);
             }
         }
@@ -89,6 +112,7 @@ namespace BreakTimer
             if (sender is Button) 
             {
                 seconds = 0;
+                TimeEntry.Text = string.Empty;
                 UpdateTimeText(true);
             }
         }
@@ -105,7 +129,7 @@ namespace BreakTimer
         {
             if (sender is Entry timeEntry)
             {
-                CheckIfTime(timeEntry);
+                //CheckIfTime(timeEntry);
                 StartTimerClicked(new Button(), e);
             }
         }
