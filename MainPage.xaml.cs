@@ -69,23 +69,15 @@ namespace BreakTimer
             if (info) 
             {
                 // TODO: Ibland räknar detta en minut för kort rast
-                //DateTime dateTime = DateTime.Now + TimeSpan.FromSeconds(seconds);
-                //UpdateInfoTimeText(dateTime);
+                DateTime dateTime = DateTime.Now + TimeSpan.FromSeconds(seconds);
+                UpdateInfoTimeText(dateTime);
 
-                // Testar med att avrunda
-                if (seconds > 0)
-                {
-                    TimeSpan span = TimeSpan.FromSeconds(seconds);
-                    long ticks = (DateTime.Now.Ticks + (span.Ticks / 2) + 1) / span.Ticks;
-
-                    UpdateInfoTimeText(new DateTime(ticks * span.Ticks));
-                }
             }
         }
 
         private void UpdateInfoTimeText(DateTime dateTime)
         {
-            InformationLabel.Text = InformationText.Text.Replace("{time}", dateTime.ToString("HH:mm"));
+            InformationLabel.Text = InformationText.Text.Replace("{time}", dateTime.ToString("HH:mm:ss"));
         }
 
         private void AddOrSubBtnClick(object sender, EventArgs e)
