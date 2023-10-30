@@ -47,7 +47,7 @@ namespace BreakTimer
 
                 ControllPanel.IsVisible = false;
                 TimeLabel.FontSize = 110;
-                UpdateTimeText(true);
+                UpdateTimeText();
 
                 while (seconds >= 0)
                 {
@@ -77,7 +77,7 @@ namespace BreakTimer
 
         private void UpdateInfoTimeText(DateTime dateTime)
         {
-            InformationLabel.Text = InformationText.Text.Replace("{time}", dateTime.ToString("HH:mm:ss"));
+            InformationLabel.Text = InformationText.Text.Replace("{time}", dateTime.ToString("HH:mm"));
         }
 
         private void AddOrSubBtnClick(object sender, EventArgs e)
