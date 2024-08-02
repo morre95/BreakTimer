@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿using MediaManager;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace BreakTimer
 {
@@ -18,6 +20,8 @@ namespace BreakTimer
         {
             if (sender is Button)
             {
+                //await CrossMediaManager.Current.Play("https://ia800806.us.archive.org/15/items/Mp3Playlist_555/AaronNeville-CrazyLove.mp3");
+                
                 //Debug.WriteLine($"TimeEntry.Text: {TimeEntry.Text}, seconds: {seconds}");
                 if (seconds <= 0)
                 {
@@ -48,11 +52,29 @@ namespace BreakTimer
                     await Task.Delay(1000);
                 }
 
+                await PlaySoundAsync(@"Gong_Sound.mp3");
+
                 MainView.Children.RemoveAt(0);
 
                 ControllPanel.IsVisible = true;
                 TimeLabel.FontSize = 42;
             }
+        }
+
+        public async Task PlaySoundAsync(string sound)
+        {
+            // FIXME: Funkar inte för Adnroid....
+            Stream? resourceStream = null;
+#if WINDOWS
+            resourceStream = await FileSystem.OpenAppPackageFileAsync(sound);
+#elif ANDROID
+            var assetManager = Android.App.Application.Context.Assets;
+            resourceStream = assetManager.Open(sound.Replace("Resources/Raw/", ""));
+#endif
+            if (resourceStream is Stream stream)
+            {
+                await CrossMediaManager.Current.Play(stream, MediaManager.Media.MimeType.AudioMp3);
+            } 
         }
 
         private void UpdateTimeText(bool info = false)

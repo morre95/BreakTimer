@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using MediaManager;
+using Microsoft.Extensions.Logging;
 
 namespace BreakTimer
 {
@@ -18,6 +19,8 @@ namespace BreakTimer
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+
+            builder.Services.AddSingleton(CrossMediaManager.Current);
 
             return builder.Build();
         }
