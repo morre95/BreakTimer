@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.7.34031.279
+VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BreakTimer", "BreakTimer.csproj", "{A4E21D97-BBBD-4A86-90FE-1301A7EA8D2E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BreakTimer", "BreakTimer\BreakTimer.csproj", "{E3901B6F-1502-4D2D-B9F7-F59B01930FA2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,17 +11,17 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A4E21D97-BBBD-4A86-90FE-1301A7EA8D2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A4E21D97-BBBD-4A86-90FE-1301A7EA8D2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A4E21D97-BBBD-4A86-90FE-1301A7EA8D2E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{A4E21D97-BBBD-4A86-90FE-1301A7EA8D2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A4E21D97-BBBD-4A86-90FE-1301A7EA8D2E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A4E21D97-BBBD-4A86-90FE-1301A7EA8D2E}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{E3901B6F-1502-4D2D-B9F7-F59B01930FA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3901B6F-1502-4D2D-B9F7-F59B01930FA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3901B6F-1502-4D2D-B9F7-F59B01930FA2}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{E3901B6F-1502-4D2D-B9F7-F59B01930FA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3901B6F-1502-4D2D-B9F7-F59B01930FA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3901B6F-1502-4D2D-B9F7-F59B01930FA2}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {64DF6CD9-C016-4610-9585-8F38CFB3EF41}
+		SolutionGuid = {9FBF05E1-710E-4D90-9CE4-C6E4F483BA47}
 	EndGlobalSection
 EndGlobal
