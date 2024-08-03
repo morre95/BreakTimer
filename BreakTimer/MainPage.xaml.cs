@@ -61,19 +61,13 @@ namespace BreakTimer
             }
         }
 
-        public async Task PlaySoundAsync(string sound)
+        private async Task PlaySoundAsync(string sound)
         {
-            // FIXME: Funkar inte för Adnroid....
-            Stream? resourceStream = null;
-#if WINDOWS
-            resourceStream = await FileSystem.OpenAppPackageFileAsync(sound);
-#elif ANDROID
-            var assetManager = Android.App.Application.Context.Assets;
-            resourceStream = assetManager.Open(sound.Replace("Resources/Raw/", ""));
-#endif
+            var resourceStream = await FileSystem.OpenAppPackageFileAsync(sound);
             if (resourceStream is Stream stream)
             {
                 await CrossMediaManager.Current.Play(stream, MediaManager.Media.MimeType.AudioMp3);
+                //await CrossMediaManager.Current.Play("https://ia800806.us.archive.org/15/items/Mp3Playlist_555/AaronNeville-CrazyLove.mp3");
             } 
         }
 
