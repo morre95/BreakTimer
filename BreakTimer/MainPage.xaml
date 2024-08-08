@@ -117,9 +117,12 @@
             TextChanged="InfoTextChanged"
             HorizontalOptions="Start" 
             Placeholder="Set information text here" />
+                <Label Text="'{time}' = the time"/>
             </StackLayout>
 
             <Label x:Name="DebugLabel" />
+
+            
         </VerticalStackLayout>
     </ScrollView>
 
