@@ -59,6 +59,7 @@
 	<ItemGroup>
 	  <None Remove="Resources\Images\break_icon.png" />
 	  <None Remove="Resources\Raw\Gong_Sound.mp3" />
+	  <None Remove="Resources\Raw\Gong_Sound.wav" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -66,6 +67,8 @@
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="Plugin.MediaManager.Forms" Version="1.2.2" />
+		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.8" />
 	</ItemGroup>
 
 </Project>
