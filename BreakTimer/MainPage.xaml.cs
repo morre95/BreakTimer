@@ -1,6 +1,7 @@
 ﻿using MediaManager;
 using Microsoft.Extensions.Logging;
 using SQLite;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -20,19 +21,37 @@ namespace BreakTimer
 
         private ILogger<MainPage> _logger { get; set; }
 
-        Stopwatch stopwatch;
+        private Stopwatch stopwatch;
 
-        public MainPage(ILogger<MainPage> logger)
+        public MainPage(ILogger<MainPage> logger, TimeTableDatabase database)
         {
             InitializeComponent();
-            Database = new();
+            Database = database;
+            stopwatch = new();
 
             _logger = logger;
+
         }
 
         private async void StartTimerClicked(object sender, EventArgs e)
         {
+            // TODO: Fixa så det går att lista Recources/Raw filerna eller hårdkoda in dem i en lista
+            string mainDir = FileSystem.Current.AppDataDirectory;
+            Debug.WriteLine(mainDir);
+            Stream resourceStream = await FileSystem.OpenAppPackageFileAsync("AboutAssets.txt");
 
+            FileStream? fs = resourceStream as FileStream;
+            if (fs != null)
+            {
+                Debug.WriteLine(fs.ToString());
+            }
+            else
+            {
+                Debug.WriteLine("No fs!!!");
+            }
+            // Slut på test kod
+
+            //await Database.DeleteAll();
             var items = await Database.GetItemsAsync();
             foreach (var item in items)
             {
@@ -70,7 +89,6 @@ namespace BreakTimer
                 UpdateTimeText();
 
 
-
                 var timer = Dispatcher.CreateTimer();
                 timer.Interval = TimeSpan.FromSeconds(1);
                 timer.Tick += TimerAsync;
@@ -88,9 +106,14 @@ namespace BreakTimer
 
             if (seconds <= 0 && sender is IDispatcherTimer t) 
             {
+                _logger.LogDebug($"Stopwatch: {stopwatch.Elapsed.TotalSeconds}, Seconds: {oldSeconds}");
+                stopwatch.Stop();
+
                 t.Stop();
                 string soundFile = "Gong_Sound.wav";
                 await PlaySoundAsync(soundFile);
+
+                
 
                 await Database.SaveItemAsync(new()
                 {
@@ -271,13 +294,13 @@ namespace BreakTimer
     {
         public const string DatabaseFilename = "my_database.db3";
 
-        public const SQLite.SQLiteOpenFlags Flags =
+        public const SQLiteOpenFlags Flags =
             // open the database in read/write mode
-            SQLite.SQLiteOpenFlags.ReadWrite |
+            SQLiteOpenFlags.ReadWrite |
             // create the database if it doesn't exist
-            SQLite.SQLiteOpenFlags.Create |
+            SQLiteOpenFlags.Create |
             // enable multi-threaded database access
-            SQLite.SQLiteOpenFlags.SharedCache;
+            SQLiteOpenFlags.SharedCache;
 
         public static string DatabasePath =>
             Path.Combine(FileSystem.AppDataDirectory, DatabaseFilename);
@@ -285,6 +308,7 @@ namespace BreakTimer
 
     public class TimeTable
     {
+        [PrimaryKey]
         public int ID { get; set; }
         public string Sound { get; set; }
         public DateTime Timestamp { get; set; }
@@ -298,32 +322,22 @@ namespace BreakTimer
 
         public TimeTableDatabase()
         {
-        }
-
-        async Task Init()
-        {
-            if (Database is not null)
-                return;
-
             Database = new SQLiteAsyncConnection(Constants.DatabasePath, Constants.Flags);
-            var result = await Database.CreateTableAsync<TimeTable>();
+            _ = Database.CreateTableAsync<TimeTable>();
         }
 
         public async Task<List<TimeTable>> GetItemsAsync()
         {
-            await Init();
             return await Database.Table<TimeTable>().ToListAsync();
         }
 
         public async Task<TimeTable> GetItemAsync(int id)
         {
-            await Init();
             return await Database.Table<TimeTable>().Where(i => i.ID == id).FirstOrDefaultAsync();
         }
 
         public async Task<int> SaveItemAsync(TimeTable item)
         {
-            await Init();
             if (item.ID != 0)
                 return await Database.UpdateAsync(item);
             else
@@ -332,8 +346,24 @@ namespace BreakTimer
 
         public async Task<int> DeleteItemAsync(TimeTable item)
         {
-            await Init();
             return await Database.DeleteAsync(item);
+        }
+
+        public async Task<int> DeleteItemAsync(int id)
+        {
+            TimeTable item = await GetItemAsync(id);
+            return await Database.DeleteAsync(item);
+        }
+
+        public async Task<List<int>> DeleteAll() 
+        { 
+            List<TimeTable> items = await GetItemsAsync();
+            List<int> indexes = new List<int>();
+            foreach (TimeTable item in items)
+            {
+                indexes.Add(await Database.DeleteAsync(item));
+            }
+            return indexes;
         }
 
     }

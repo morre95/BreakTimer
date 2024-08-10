@@ -1,6 +1,7 @@
 ﻿using MediaManager;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.Runtime.Intrinsics.Arm;
 
 namespace BreakTimer
 {
@@ -22,6 +23,7 @@ namespace BreakTimer
 #endif
 
 
+            builder.Services.AddTransient<TimeTableDatabase>();
             //builder.Services.AddTransient<ILogger>();
             builder.Services.AddSingleton<MainPage>();
 
